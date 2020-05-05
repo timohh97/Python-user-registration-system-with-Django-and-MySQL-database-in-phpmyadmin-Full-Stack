@@ -10,9 +10,20 @@ def getUsername(request):
         repeatPasswordFormObject = repeatPasswordForm(request.POST)
 
         if usernameFormObject.is_valid() and passwordFormObject.is_valid():
-            print(usernameFormObject["username"].value())
-            print(passwordFormObject["password"].value())
-            print(repeatPasswordFormObject["repeatPassword"].value())
+
+            usernameData =  usernameFormObject["username"].value()
+            passwordData =  passwordFormObject["password"].value()
+            repeatPasswordData = repeatPasswordFormObject["repeatPassword"].value()
+
+            print(usernameData)
+            print(passwordData)
+            print(repeatPasswordData)
+
+            if(passwordData!=repeatPasswordData):
+                print("The passwords are not the same!")
+            else:
+                print("The passwords are the same!")
+                
 
     else:
         usernameFormObject = usernameForm()
