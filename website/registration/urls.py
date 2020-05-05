@@ -3,5 +3,6 @@ from . import views
 
 app_name = "registration"
 urlpatterns = [
-    path('', views.initStartPage)
+    path('', views.getUsername),
 ]
+

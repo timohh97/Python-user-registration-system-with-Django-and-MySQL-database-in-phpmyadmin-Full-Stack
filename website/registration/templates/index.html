@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User registration</title>
+</head>
+<body style="text-align:center">
+<h1>Create a new account</h1>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ usernameInput }}<br><br>
+    {% csrf_token %}
+    {{ passwordInput }}<br><br>
+    {% csrf_token %}
+    {{ repeatPasswordInput }}<br><br>
+    <input type="submit" value="Create account">
+</form>
+
+</body>
+</html>
