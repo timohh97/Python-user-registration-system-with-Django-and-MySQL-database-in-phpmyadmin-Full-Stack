@@ -1,5 +1,6 @@
 import random
 import pymysql
+from django.http import HttpResponseRedirect
 
 from django.shortcuts import render
 
@@ -24,11 +25,12 @@ def getUsername(request):
 
             if(passwordData!=repeatPasswordData):
                 print("The passwords are not the same!")
+                return render(request,"errorInfo.html")
             else:
                 print("The passwords are the same!")
                 database = pymysql.connect(host="localhost", user="root", passwd="", database="besucher")
                 cursor = database.cursor()
-                insertNewRowIntoUserTable(usernameData,passwordData,repeatPasswordData,cursor,database)
+                return insertNewRowIntoUserTable(usernameData,passwordData,cursor,database,request)
 
 
     else:
@@ -75,15 +77,11 @@ def deleteAllRows(cursor,database):
     database.commit()
 
 
-def insertNewRowIntoUserTable(username, password, repeatedPassword,cursor,database):
-
-    if(password != repeatedPassword):
-        print("The passwords are not the same!")
-        return None
+def insertNewRowIntoUserTable(username, password, cursor,database,request):
 
     if(checkIfUsernameExists(username,cursor)):
         print("This username already exists!")
-        return None
+        return render(request, "errorInfo2.html")
 
     id = random.randint(0, 10000000)
 
@@ -93,6 +91,7 @@ def insertNewRowIntoUserTable(username, password, repeatedPassword,cursor,databa
     cursor.execute(
         "insert into user (id,username,password) VALUES ('" + str(id) + "','" + username + "','" + password + "')")
     database.commit()
+    return render(request, "info.html")
 
 
 
@@ -116,3 +115,4 @@ def checkIfUsernameExists(username,cursor):
                 return True
 
     return False
+
